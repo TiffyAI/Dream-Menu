@@ -9,7 +9,7 @@
     body {
       margin: 0;
       font-family: 'Orbitron', sans-serif;
-      background: url('https://tiffyai.github.io/assets/main.jpg') no-repeat center center fixed;
+      background: url('https://tiffyai.github.io/Dream-Menu/main.jpg') no-repeat center center fixed;
       background-size: cover;
       display: flex;
       align-items: center;
@@ -63,34 +63,33 @@
 <body>
   <div class="glass-container">
     <h1>TiffyAI Portal</h1>
-    <button class="dream-btn" onclick="connectThenGo('https://tiffyai.github.io/LuckyWheel/')">Lucky Wheel</button>
-    <button class="dream-btn" onclick="connectThenGo('https://tiffyai.github.io/Treasure/')">Treasure Portal</button>
-    <button class="dream-btn" onclick="connectThenGo('https://tiffyai.github.io/KYC/')">KYC Verification</button>
-    <button class="dream-btn" onclick="connectThenGo('https://tiffyai.github.io/AI-Trading/')">AI Trading</button>
-    <button class="dream-btn" onclick="connectThenGo('https://tiffyai.github.io/Lottery/')">TiffyAI Lottery</button>
-    <button class="dream-btn" onclick="connectThenGo('https://tiffyai.github.io/Claim/')">Claim Portal</button>
+    <button class="dream-btn" onclick="connectThenGo('LuckyWheel')">Lucky Wheel</button>
+    <button class="dream-btn" onclick="connectThenGo('Treasure')">Treasure</button>
+    <button class="dream-btn" onclick="connectThenGo('KYC')">KYC</button>
+    <button class="dream-btn" onclick="connectThenGo('AI-Trading')">AI Trading</button>
+    <button class="dream-btn" onclick="connectThenGo('Lottery')">Lottery</button>
+    <button class="dream-btn" onclick="connectThenGo('Claim')">Claim Portal</button>
   </div>
 
   <script>
-    async function connectThenGo(url) {
+    async function connectThenGo(page) {
+      const base = "https://tiffyai.github.io/" + page + "/";
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       const isMetaMaskInstalled = typeof window.ethereum !== 'undefined';
 
       if (!isMetaMaskInstalled) {
-        const onboardingUrl = isMobile 
-          ? 'https://metamask.app.link/dapp/tiffyai.github.io/On-boarding-/' 
-          : 'https://metamask.io/download/';
-        window.open(onboardingUrl, '_blank');
+        const link = `https://metamask.app.link/dapp/tiffyai.github.io/${page}/`;
+        window.open(link, '_blank');
         return;
       }
 
       try {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         if (accounts && accounts.length > 0) {
-          window.location.href = url;
+          window.location.href = base;
         }
-      } catch (error) {
-        console.warn("Wallet connect canceled.");
+      } catch (err) {
+        console.warn("User rejected or wallet not connected");
       }
     }
   </script>
