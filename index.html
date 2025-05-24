@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TiffyAI Dream Menu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: url('https://tiffyai.github.io/assets/TiffyAI-Treasury.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .glass-container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+      max-width: 400px;
+    }
+
+    .dream-btn {
+      width: 100%;
+      margin: 10px 0;
+      padding: 14px 22px;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 15px #00f2ff;
+      animation: glowPulse 2.5s infinite alternate;
+      transition: transform 0.3s ease;
+    }
+
+    .dream-btn:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes glowPulse {
+      0% { box-shadow: 0 0 10px #00f2ff; }
+      50% { box-shadow: 0 0 25px #00c6ff; }
+      100% { box-shadow: 0 0 10px #00f2ff; }
+    }
+
+    h1 {
+      color: #00f2ff;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #00ffff;
+    }
+  </style>
+</head>
+<body>
+  <div class="glass-container">
+    <h1>TiffyAI Portal</h1>
+    <button class="dream-btn" onclick="triggerWalletAndGo('https://tiffyai.github.io/LuckyWheel/')">Lucky Wheel</button>
+    <button class="dream-btn" onclick="triggerWalletAndGo('https://tiffyai.github.io/Treasure/')">Treasure Portal</button>
+    <button class="dream-btn" onclick="triggerWalletAndGo('https://tiffyai.github.io/KYC/')">KYC Verification</button>
+    <button class="dream-btn" onclick="triggerWalletAndGo('https://tiffyai.github.io/AI-Trading/')">AI Trading</button>
+    <button class="dream-btn" onclick="triggerWalletAndGo('https://tiffyai.github.io/Lottery/')">TiffyAI Lottery</button>
+    <button class="dream-btn" onclick="triggerWalletAndGo('https://tiffyai.github.io/Claim/')">Claim Portal</button>
+  </div>
+
+  <script>
+    async function triggerWalletAndGo(destinationUrl) {
+      if (typeof window.ethereum === 'undefined') {
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        const installLink = isMobile 
+          ? 'https://metamask.app.link/dapp/tiffyai.github.io/On-boarding-/' 
+          : 'https://metamask.io/download/';
+        window.open(installLink, '_blank');
+        return;
+      }
+
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        if (accounts && accounts.length > 0) {
+          window.location.href = destinationUrl;
+        }
+      } catch (err) {
+        console.error("Wallet connection cancelled or failed:", err);
+      }
+    }
+  </script>
+</body>
+</html>
