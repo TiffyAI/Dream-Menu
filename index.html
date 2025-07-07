@@ -62,15 +62,32 @@
     #price {
       color: #00ffff;
       font-size: 18px;
-      margin-bottom: 20px;
+      margin-bottom: 6px;
       text-shadow: 0 0 8px #ff00ff, 0 0 15px #00ffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #price img {
+      height: 24px;
+      width: 24px;
+    }
+
+    #lastUpdated {
+      font-size: 12px;
+      color: #ffffffcc;
+      text-shadow: 0 0 4px #00ffff;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
   <div class="glass-container">
     <h1>TiffyAI Portal</h1>
-    <div id="price">Loading price...</div>
+    <div id="price"><img src="https://tiffyai.github.io/Dream-Menu/TiffyAI-Token.png" alt="TIFFY">Loading...</div>
+    <div id="lastUpdated"></div>
     <button class="dream-btn" onclick="connectThenGo('Referral-Rewards')">Send 1 TIFFY Get 2 Back</button>
     <button class="dream-btn" onclick="connectThenGo('Keys')">Daily Claim</button>
     <button class="dream-btn" onclick="connectThenGo('Mining-Machine-')">TIFFY Mining Machine</button>
@@ -137,9 +154,15 @@
         const res = await fetch('https://tiffyai.github.io/TIFFY-Market-Value/price.json');
         const data = await res.json();
         const price = parseFloat(data.tiffyToUSD).toFixed(2);
-        document.getElementById('price').textContent = `$TIFFY: $${price}`;
+        const updatedTime = new Date(data.lastUpdated).toLocaleString();
+
+        document.getElementById('price').innerHTML =
+          `<img src="https://tiffyai.github.io/Dream-Menu/TiffyAI-Token.png" alt="TIFFY"> $TIFFY: $${price}`;
+        document.getElementById('lastUpdated').textContent = `Last updated: ${updatedTime}`;
       } catch (e) {
-        document.getElementById('price').textContent = `$TIFFY: Unavailable`;
+        document.getElementById('price').innerHTML =
+          `<img src="https://tiffyai.github.io/Dream-Menu/TiffyAI-Token.png" alt="TIFFY"> $TIFFY: Unavailable`;
+        document.getElementById('lastUpdated').textContent = '';
         console.error("Failed to fetch price:", e);
       }
     }
