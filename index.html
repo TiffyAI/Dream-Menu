@@ -55,29 +55,22 @@
 
     h1 {
       color: #ffffff;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
       text-shadow: 0 0 10px #00ffff, 0 0 20px #ff00ff;
+    }
+
+    #price {
+      color: #00ffff;
+      font-size: 18px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 8px #ff00ff, 0 0 15px #00ffff;
     }
   </style>
 </head>
 <body>
-  <div id="tiffyPrice" style="
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    font-size: 18px;
-    color: #00ffff;
-    text-shadow: 0 0 10px #00ffff, 0 0 20px #ff00ff;
-    background: rgba(0,0,0,0.4);
-    padding: 8px 16px;
-    border-radius: 12px;
-    font-family: 'Orbitron', sans-serif;
-    z-index: 9999;">
-    $TIFFY: ...
-  </div>
-
   <div class="glass-container">
     <h1>TiffyAI Portal</h1>
+    <div id="price">Loading price...</div>
     <button class="dream-btn" onclick="connectThenGo('Referral-Rewards')">Send 1 TIFFY Get 2 Back</button>
     <button class="dream-btn" onclick="connectThenGo('Keys')">Daily Claim</button>
     <button class="dream-btn" onclick="connectThenGo('Mining-Machine-')">TIFFY Mining Machine</button>
@@ -124,7 +117,7 @@
                 params: [BNB_MAINNET_PARAMS],
               });
             } else {
-              console.error('Switch error:', switchError);
+              console.error('Network switch error:', switchError);
               return;
             }
           }
@@ -135,26 +128,23 @@
           window.location.href = base;
         }
       } catch (err) {
-        console.warn("Wallet connection failed:", err);
+        console.warn("Wallet not connected:", err);
       }
     }
-  </script>
 
-  <script type="module">
-    import { getTiffyPriceUSD } from '../src/price.json';
-
-    async function displayPrice() {
+    async function fetchPrice() {
       try {
-        const price = await getTiffyPriceUSD();
-        document.getElementById("tiffyPrice").textContent = `$TIFFY: $${price.toFixed(4)}`;
-      } catch (err) {
-        console.error("Price fetch failed:", err);
-        document.getElementById("tiffyPrice").textContent = "$TIFFY: Unavailable";
+        const res = await fetch('https://tiffyai.github.io/price.json');
+        const data = await res.json();
+        const price = parseFloat(data.tiffyPriceUSD).toFixed(2);
+        document.getElementById('price').textContent = `$TIFFY: $${price}`;
+      } catch (e) {
+        document.getElementById('price').textContent = `$TIFFY: Unavailable`;
+        console.error("Failed to fetch price:", e);
       }
     }
 
-    displayPrice();
-    setInterval(displayPrice, 30000);
+    fetchPrice();
   </script>
 </body>
 </html>
