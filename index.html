@@ -134,7 +134,7 @@
 
     async function fetchPrice() {
       try {
-        const res = await fetch('https://tiffyai.github.io/price.json');
+        const res = await fetch('https://tiffyai.github.io/TIFFY-Market-Value/price.json');
         const data = await res.json();
         const price = parseFloat(data.tiffyPriceUSD).toFixed(2);
         document.getElementById('price').textContent = `$TIFFY: $${price}`;
