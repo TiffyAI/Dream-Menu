@@ -112,11 +112,11 @@
     <div id="lastUpdated"></div>
 
     <button class="dream-btn" onclick="promptWallet('Referral-Rewards')">Give Away 1 TIFFY Get 2 Back</button>
-    <button class="dream-btn" onclick="openPresale()">Double-Your-$TIFFY-Presale via PayPal</button>
-    <button class="dream-btn" onclick="promptWallet('Loading-Mining-Machine-')">TIFFY Mining Machine</button>
-    <button class="dream-btn" onclick="promptWallet('Blue-Key-Claim')">Collect 1 TIFFY & 1 Blue Key Now</button>
-    <button class="dream-btn" onclick="promptWallet('Lottery-numbers')">Lottery Tickets</button>
-    <button class="dream-btn" onclick="promptWallet('TiffyAI-Users')">User Zone Achievements</button>
+    <button class="dream-btn" onclick="openPresale()">Double-Your‑$TIFFY‑Presale via PayPal</button>
+    <button class="dream-btn" onclick="promptWallet('Loading‑Mining‑Machine‑')">TIFFY Mining Machine</button>
+    <button class="dream-btn" onclick="promptWallet('Blue‑Key‑Claim')">Collect 1 TIFFY & 1 Blue Key Now</button>
+    <button class="dream-btn" onclick="promptWallet('Lottery‑numbers')">Lottery Tickets</button>
+    <button class="dream-btn" onclick="promptWallet('TiffyAI‑Users')">User Zone Achievements</button>
 
     <div class="wallet-chooser" id="walletChooser">
       <button class="wallet-btn" onclick="launch('metamask')">MetaMask</button>
@@ -134,7 +134,6 @@
     }
 
     function openPresale() {
-      // Presale link just opens, no wallet chooser
       window.location.href = "https://tiffyai.github.io/-TIFFY-Presale/";
     }
 
@@ -153,40 +152,34 @@
 
       if (wallet === 'binance') {
         copyToClipboard(baseUrl);
-        window.location.href = `https://www.binance.com/en/dapp?url=${encodeURIComponent(baseUrl)}`;
+        window.location.href = `bnc://app.binance.com/?url=${encodeURIComponent(baseUrl)}`;
       } else {
         const appLinks = {
           metamask: `https://metamask.app.link/dapp/tiffyai.github.io/${page}/`,
-          trust: `https://link.trustwallet.com/open_url?coin_id=60&url=https://tiffyai.github.io/${page}/`
+          trust: `https://link.trustwallet.com/open_url?coin_id=60&url=${encodeURIComponent(baseUrl)}`
         };
-
-        if (wallet in appLinks) {
-          window.location.href = appLinks[wallet];
-        }
+        if (wallet in appLinks) window.location.href = appLinks[wallet];
       }
 
       document.getElementById('walletChooser').style.display = 'none';
     }
 
-    async function fetchPrice() {
-      try {
-        const res = await fetch('https://tiffyai.github.io/TIFFY-Market-Value/price.json');
-        const data = await res.json();
-        const price = parseFloat(data.tiffyToUSD).toFixed(2);
-        const updatedTime = new Date(data.lastUpdated).toLocaleString();
-
-        document.getElementById('price').innerHTML =
-          `<img src="https://tiffyai.github.io/Dream-Menu/TiffyAI-Token.png" alt="TIFFY"> $TIFFY: $${price}`;
-        document.getElementById('lastUpdated').textContent = `Last updated: ${updatedTime}`;
-      } catch (e) {
-        document.getElementById('price').innerHTML =
-          `<img src="https://tiffyai.github.io/Dream-Menu/TiffyAI-Token.png" alt="TIFFY"> $TIFFY: Unavailable`;
-        document.getElementById('lastUpdated').textContent = '';
-        console.error("Failed to fetch price:", e);
-      }
+    function fetchPrice() {
+      fetch('https://tiffyai.github.io/TIFFY-Market-Value/price.json')
+        .then(r => r.json())
+        .then(data => {
+          document.getElementById('price').innerHTML =
+            `<img src="https://tiffyai.github.io/Dream-Menu/TiffyAI-Token.png"> $TIFFY: $${parseFloat(data.tiffyToUSD).toFixed(2)}`;
+          document.getElementById('lastUpdated').textContent = `Last updated: ${new Date(data.lastUpdated).toLocaleString()}`;
+        })
+        .catch(e => {
+          document.getElementById('price').innerHTML = `<img src="https://tiffyai.github.io/Dream-Menu/TiffyAI-Token.png"> $TIFFY: Unavailable`;
+          document.getElementById('lastUpdated').textContent = '';
+          console.error("Price fetch failed", e);
+        });
     }
 
-    fetchPrice();
+    window.addEventListener('load', fetchPrice);
   </script>
 </body>
 </html>
