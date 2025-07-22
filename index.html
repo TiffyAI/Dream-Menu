@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TiffyAI Dream Menu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: url('https://tiffyai.github.io/Dream-Menu/main.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .glass-container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+      max-width: 420px;
+    }
+
+    .dream-btn {
+      width: 100%;
+      margin: 12px 0;
+      padding: 14px 22px;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(90deg, #ff00ff, #00ffff);
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 0 15px #ff00ff, 0 0 25px #00ffff;
+      animation: glowPulse 3s infinite alternate;
+      transition: transform 0.3s ease;
+    }
+
+    .dream-btn:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes glowPulse {
+      0% { box-shadow: 0 0 12px #00ffff, 0 0 12px #ff00ff; }
+      50% { box-shadow: 0 0 28px #00ffff, 0 0 28px #ff00ff; }
+      100% { box-shadow: 0 0 12px #00ffff, 0 0 12px #ff00ff; }
+    }
+
+    h1 {
+      color: #ffffff;
+      margin-bottom: 16px;
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #ff00ff;
+    }
+
+    #price {
+      color: #00ffff;
+      font-size: 18px;
+      margin-bottom: 6px;
+      text-shadow: 0 0 8px #ff00ff, 0 0 15px #00ffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #price img {
+      height: 24px;
+      width: 24px;
+    }
+
+    #lastUpdated {
+      font-size: 12px;
+      color: #ffffffcc;
+      text-shadow: 0 0 4px #00ffff;
+      margin-bottom: 20px;
+    }
+
+    .wallet-popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .wallet-popup-inner {
+      background: rgba(0, 0, 0, 0.9);
+      border: 2px solid #00ffff;
+      border-radius: 20px;
+      padding: 30px 20px;
+      max-width: 320px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 0 20px #ff00ff;
+    }
+
+    .wallet-btn {
+      display: block;
+      margin: 10px auto;
+      padding: 12px;
+      font-size: 16px;
+      color: white;
+      background-color: #111111;
+      border: 1px solid #00ffff;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .wallet-btn:hover {
+      background: #00ffff33;
+    }
+
+    .close-popup {
+      color: #ff00ff;
+      font-size: 16px;
+      margin-top: 12px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="glass-container">
+    <h1>TiffyAI Portal</h1>
+    <div id="price"><img src="https://tiffyai.github.io/Dream-Menu/TiffyAI-Token.png" alt="TIFFY">Loading...</div>
+    <div id="lastUpdated"></div>
+
+    <button class="dream-btn" onclick="promptWallet('Referral-Rewards')">Give Away 1 TIFFY Get 2 Back</button>
+    <button class="dream-btn" onclick="openPresale()">Double-Your‑$TIFFY‑Presale via PayPal</button>
+    <button class="dream-btn" onclick="promptWallet('Loading‑Mining‑Machine‑')">TIFFY Mining Machine</button>
+    <button class="dream-btn" onclick="promptWallet('Blue‑Key‑Claim')">Collect 1 TIFFY & 1 Blue Key Now</button>
+    <button class="dream-btn" onclick="promptWallet('Lottery‑numbers')">Lottery Tickets</button>
+    <button class="dream-btn" onclick="promptWallet('TiffyAI‑Users')">User Zone Achievements</button>
+  </div>
+
+  <div class="wallet-popup" id="walletPopup">
+    <div class="wallet-popup-inner">
+      <button class="wallet-btn" onclick="launch('metamask')">MetaMask</button>
+      <button class="wallet-btn" onclick="launch('trust')">Trust Wallet</button>
+      <button class="wallet-btn" onclick="launch('binance')">Binance Wallet</button>
+      <button class="wallet-btn" onclick="launch('okx')">OKX Wallet</button>
+      <button class="wallet-btn" onclick="launch('bitget')">Bitget Wallet</button>
+      <div class="close-popup" onclick="closePopup()">Close</div>
+    </div>
+  </div>
+
+  <script>
+    let selectedPage = '';
+
+    function promptWallet(page) {
+      selectedPage = page;
+      document.getElementById('walletPopup').style.display = 'flex';
+    }
+
+    function closePopup() {
+      document.getElementById('walletPopup').style.display = 'none';
+    }
+
+    function openPresale() {
+      window.location.href = "https://tiffyai.github.io/-TIFFY-Presale/";
+    }
+
+    async function copyToClipboard(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        alert("🔗 Link copied! Open Binance app → Discover → Paste link.");
+      } catch (err) {
+        console.error("Clipboard copy failed", err);
+      }
+    }
+
+    function launch(wallet) {
+      const baseUrl = `https://tiffyai.github.io/${selectedPage}/`;
+
+      switch(wallet) {
+        case 'metamask':
+          window.location.href = `https://metamask.app.link/dapp/tiffyai.github.io/${selectedPage}/`;
+          break;
+        case 'trust':
+          window.location.href = `https://link.trustwallet.com/open_url?coin_id=60&url=${encodeURIComponent(baseUrl)}`;
+          break;
+        case 'binance':
+          copyToClipboard(baseUrl);
+          window.location.href = `bnc://app.binance.com/?url=${encodeURIComponent(baseUrl)}`;
+          break;
+        case 'okx':
+          window.location.href = `okx://wallet/dapp/details?dappUrl=${encodeURIComponent(baseUrl)}`;
+          break;
+        case 'bitget':
+          window.location.href = `https://bitkeep.com/dapp?url=${encodeURIComponent(baseUrl)}`;
+          break;
+      }
+
+      closePopup();
+    }
+
+    function fetchPrice() {
+      fetch('https://tiffyai.github.io/TIFFY-Market-Value/price.json')
+        .then(r => r.json())
+        .then(data => {
+          document.getElementById('price').innerHTML =
+            `<img src="https://tiffyai.github.io/Dream-Menu/TiffyAI-Token.png"> $TIFFY: $${parseFloat(data.tiffyToUSD).toFixed(2)}`;
+          document.getElementById('lastUpdated').textContent = `Last updated: ${new Date(data.lastUpdated).toLocaleString()}`;
+        })
+        .catch(e => {
+          document.getElementById('price').innerHTML = `<img src="https://tiffyai.github.io/Dream-Menu/TiffyAI-Token.png"> $TIFFY: Unavailable`;
+          document.getElementById('lastUpdated').textContent = '';
+          console.error("Price fetch failed", e);
+        });
+    }
+
+    window.addEventListener('load', fetchPrice);
+  </script>
+</body>
+</html>
