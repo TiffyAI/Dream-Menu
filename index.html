@@ -66,7 +66,7 @@
     <div id="lastUpdated"></div>
 
     <button class="dream-btn" onclick="promptWallet('Referral-Rewards')">Give Away 1 TIFFY Get 2 Back</button>
-    <button class="dream-btn" onclick="promptWallet('-TIFFY-Presale', true)">Double-Your-$TIFFY-Presale via PayPal</button>
+    <button class="dream-btn" onclick="launchDefault('TIFFY-Presale')">Double-Your-$TIFFY-Presale via PayPal</button>
     <button class="dream-btn" onclick="promptWallet('Loading-Mining-Machine-')">TIFFY Mining Machine</button>
     <button class="dream-btn" onclick="promptWallet('Blue-Key-Claim')">Collect 1 TIFFY & 1 Blue Key Now</button>
     <button class="dream-btn" onclick="promptWallet('Lottery-numbers')">Lottery Tickets</button>
@@ -81,12 +81,15 @@
 
   <script>
     let selectedPage = '';
-    let forceChrome = false;
 
-    function promptWallet(page, openInChrome = false) {
+    function promptWallet(page) {
       selectedPage = page;
-      forceChrome = openInChrome;
       document.getElementById('walletChooser').style.display = 'flex';
+    }
+
+    function launchDefault(page) {
+      const link = `https://tiffyai.github.io/${page}/`;
+      window.open(link, '_blank');
     }
 
     async function copyToClipboard(text) {
