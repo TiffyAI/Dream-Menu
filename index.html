@@ -134,6 +134,7 @@
     }
 
     function openPresale() {
+      // Presale link just opens, no wallet chooser
       window.location.href = "https://tiffyai.github.io/-TIFFY-Presale/";
     }
 
@@ -152,14 +153,16 @@
 
       if (wallet === 'binance') {
         copyToClipboard(baseUrl);
-        // Optional: try to open Binance app
-        window.location.href = `https://www.binance.me/dapp?url=${encodeURIComponent(baseUrl)}`;
+        window.location.href = `https://www.binance.com/en/dapp?url=${encodeURIComponent(baseUrl)}`;
       } else {
         const appLinks = {
           metamask: `https://metamask.app.link/dapp/tiffyai.github.io/${page}/`,
           trust: `https://link.trustwallet.com/open_url?coin_id=60&url=https://tiffyai.github.io/${page}/`
         };
-        if (wallet in appLinks) window.location.href = appLinks[wallet];
+
+        if (wallet in appLinks) {
+          window.location.href = appLinks[wallet];
+        }
       }
 
       document.getElementById('walletChooser').style.display = 'none';
