@@ -140,7 +140,7 @@
     async function copyToClipboard(text) {
       try {
         await navigator.clipboard.writeText(text);
-        alert("🔗 Link copied! Open Binance app → Discover → Paste the link.");
+        alert("🔗 Link copied! Open Binance app → Discover → Paste link.");
       } catch {
         console.error("Clipboard copy failed");
       }
@@ -152,10 +152,7 @@
 
       if (wallet === 'binance') {
         copyToClipboard(baseUrl);
-        // Try launching Binance app (Android)
-        setTimeout(() => {
-          window.location.href = "intent://#Intent;scheme=binance;package=com.binance.dev;end";
-        }, 500);
+        window.location.href = `bnc://app.binance.com/?url=${encodeURIComponent(baseUrl)}`;
       } else {
         const appLinks = {
           metamask: `https://metamask.app.link/dapp/tiffyai.github.io/${page}/`,
