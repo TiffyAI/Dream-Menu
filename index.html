@@ -15,6 +15,7 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
+      flex-direction: column;
     }
 
     .glass-container {
@@ -129,9 +130,28 @@
       cursor: pointer;
       text-decoration: underline;
     }
+
+    .top-banner {
+      text-align: center;
+      font-size: 13px;
+      color: #ffffffcc;
+      text-shadow: 0 0 4px #ff00ff, 0 0 6px #00ffff;
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 10px;
+    }
+
+    .top-banner a {
+      color: #00ffff;
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
+  <!-- Moved Footer to Header Area -->
+  <div class="top-banner">
+    © 2025 <a href="https://www.tiffyai.co.za" target="_blank">Official Website: www.tiffyai.co.za</a>
+  </div>
+
   <div class="glass-container">
     <h1>TiffyAI Portal</h1>
     <div id="price"><img src="https://tiffyai.github.io/Dream-Menu/TiffyAI-Token.png" alt="TIFFY">Loading...</div>
@@ -152,20 +172,6 @@
       <button class="wallet-btn" onclick="launch('okx')">OKX Wallet</button>
       <div class="close-popup" onclick="closePopup()">Close</div>
     </div>
-  </div>
-
-  <!-- Footer -->
-  <div style="
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
-    text-align: center;
-    font-size: 13px;
-    color: #ffffffcc;
-    text-shadow: 0 0 4px #ff00ff, 0 0 6px #00ffff;
-    font-family: 'Orbitron', sans-serif;
-  ">
-    © 2025 <a href="https://www.tiffyai.co.za" target="_blank" style="color:#00ffff; text-decoration: underline;">Official Website: www.tiffyai.co.za</a>
   </div>
 
   <script>
