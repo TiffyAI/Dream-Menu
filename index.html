@@ -199,7 +199,7 @@
     async function copyToClipboard(text) {
       try {
         await navigator.clipboard.writeText(text);
-        alert("🔗 Link copied! Open Binance app → Discover → Paste link.");
+        alert("🔗 Link copied! Open app → Discover → Paste link.");
       } catch (err) {
         console.error("Clipboard copy failed", err);
       }
